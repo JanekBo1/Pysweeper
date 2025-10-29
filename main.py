@@ -21,6 +21,7 @@ b6x6m = [
     {}
 ]
 
+
 board = b6x6 ##board size change
 boardm = b6x6m ####
 boards = 6
@@ -40,112 +41,108 @@ def boardprint():
                 print(board[i-1][where],end=" ")
         print("")
 
+
+
+
+
+
 while True:
     boardprint()
     inp = input("where")
-
+    
     let = RabcMap[inp[0]] #number
     num = int(inp[1])
 
     buit = abcMap[let] + str(num)
 
-    print(buit)
-
-    board[num-1][buit] = boardm[num-1][buit]
-
-
-    finR = False
-    finL = False
-
-    Up = False
-    for h in range(20):
-        for i in range(len(board)):
-            num = i
-            for j in range(len(board[0])):
-                let = j+1
-                if i != 0:
-                    where = abcMap[let] + str(i)
-
-                    if board[i-1][where] == "□":
-
-                        if let > 1:
-                            #number
-                            buit = abcMap[let-1] + str(num)
-                            if board[num-1][buit] != "O":
-                                board[num-1][buit] = boardm[num-1][buit]
-                        if num > 1:
-                            buit = abcMap[let] + str(num-1)
-
-                            if board[num-2][buit] != "O":
-                                print("num",num-2)
-                                board[num-2][buit] = boardm[num-2][buit]
-                        if let < boards:
-                            #number
-                            buit = abcMap[let+1] + str(num)
-                            if board[num-1][buit] != "O":
-                                board[num-1][buit] = boardm[num-1][buit]
-                        if num < boards:
-                            buit = abcMap[let] + str(num+1)
-                            if board[num][buit] != "O":
-                                board[num][buit] = boardm[num][buit]
-                        ##board[i-1][where] = "O"
+    if len(inp) >= 4:
+        if inp[3] == "F":
+            board[num-1][buit] = "⚑"
+    elif len(inp) == 3:
+        if inp[2] == "F":
+            board[num-1][buit] = "⚑"
+    else:
+        board[num-1][buit] = boardm[num-1][buit]
 
 
-                #print(board[i-1][where],end=" ")
-        #print("")
+        if board[num-1][buit] == "X":
+            print("!!!!GAME OVER!!!!")
+            break
+
+        for h in range(20):
+            for i in range(len(board)):
+                num = i
+                for j in range(len(board[0])):
+                    let = j+1
+                    if i != 0:
+                        where = abcMap[let] + str(i)
+
+#                        print("test",where,boardm[i-1][where])
+
+                        if board[i-1][where] == "□":
+
+                            if let > 1:
+                                locleter = let-1 ##let-1
+                                locnum = num-1
+                                buit = abcMap[locleter] + str(locnum+1)
+                                if board[locnum][buit] != "⚑":
+                                    board[locnum][buit] = boardm[locnum][buit]
+                            if num > 1:
+                                locleter = let 
+                                locnum = num-2 ##num-1
+
+                                buit = abcMap[locleter] + str(locnum+1) 
+                                if board[locnum][buit] != "⚑":
+                                    board[locnum][buit] = boardm[locnum][buit]
+                            if let > 1 and num > 1:
+                                locleter = let-1 ##let -1
+                                locnum = num-2 ##num-1
+
+                                buit = abcMap[locleter] + str(locnum+1)  
+                                if board[locnum][buit] != "⚑":
+                                    board[locnum][buit] = boardm[locnum][buit]
+                            if let < boards and num > 1:
+                                locleter = let+1 ##let +1
+                                locnum = num-2 ##num-1
+
+                                buit = abcMap[locleter] + str(locnum+1)  
+                                if board[locnum][buit] != "⚑":
+                                    board[locnum][buit] = boardm[locnum][buit]
+                            if let < boards:
+                                locleter = let+1 ##let +1
+                                locnum = num-1 ##num
+
+                                buit = abcMap[locleter] + str(locnum+1)
+                                if board[locnum][buit] != "⚑":
+                                    board[locnum][buit] = boardm[locnum][buit]
+                            if num < boards:
+                                locleter = let 
+                                locnum = num ##num +1
+
+                                buit = abcMap[locleter] + str(locnum+1)
+                                if board[locnum][buit] != "⚑":
+                                    board[locnum][buit] = boardm[locnum][buit]
+                            if let > 1 and num < boards:
+                                locleter = let-1 ##let -1
+                                locnum = num ##num+1
+
+                                buit = abcMap[locleter] + str(locnum+1)  
+                                
+                                if board[locnum][buit] != "⚑":
+                                    print(buit)
+                                    board[locnum][buit] = boardm[locnum][buit]
+                            if let < boards and num < boards:
+                                locleter = let+1 ##let +1
+                                locnum = num ##num+1
+
+                                buit = abcMap[locleter] + str(locnum+1)  
+                                if board[locnum][buit] != "⚑":
+                                    board[locnum][buit] = boardm[locnum][buit]
+                            
 
 
-    # for h in range(20):
-    #     while board[num-1][buit] == "□" and let < boards:
-    #         let += 1 #number
-
-    #         buit = abcMap[let] + str(num)
-    #         board[num-1][buit] = boardm[num-1][buit]
-    #     while board[num-1][buit] == "□" and let > 1:
-    #         let -= 1 #number
-
-    #         buit = abcMap[let] + str(num)
-    #         board[num-1][buit] = boardm[num-1][buit]
-    #     if board[num-1][buit] != "□":
-    #         let += 1 
-    #     if num < boards and Up == False:
-    #         num += 1
-    #         buit = abcMap[let] + str(num)
-    #         board[num-1][buit] = boardm[num-1][buit]
-    #     else:
-    #         Up = True
-
-    #     if num > 1 and Up == True:
-    #         num -= 1
-    #         buit = abcMap[let] + str(num)
-    #         board[num-1][buit] = boardm[num-1][buit]
-
-    # if board[num-1][buit] == "□":
-        
-    #     while num < boards:
-    #         #num += 1
-    #         while let < boards and boardm[num-1][buit] == "□" :
-    #             let += 1 #number
-    #             buit = abcMap[let] + str(num)
-                
-    #             board[num-1][buit] = boardm[num-1][buit]
-    #         while let > 1 and boardm[num-1][buit] == "□":
-    #             let -= 1 #number
-    #             buit = abcMap[let] + str(num)
-                
-    #             board[num-1][buit] = boardm[num-1][buit]
-            
-    #         let += 1
-    #         num += 1
-    #         buit = abcMap[let] + str(num)
-    #         print(buit)
-
+                    
             
 
 
-            
-
-
-#        time.sleep(1)
-
-
+boardprint()
