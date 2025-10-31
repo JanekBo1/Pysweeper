@@ -140,55 +140,7 @@ for h in range(20):
             if i != 0:
                 where = abcMap[let] + str(i)
                 if board[i-1][where] == "□":
-                    if let > 1:
-                        locleter = let-1 ##let-1
-                        locnum = num-1
-                        buit = abcMap[locleter] + str(locnum+1)
-                        if board[locnum][buit] != "⚑":
-                            board[locnum][buit] = boardm[locnum][buit]
-                    if num > 1:
-                        locleter = let 
-                        locnum = num-2 ##num-1
-                        buit = abcMap[locleter] + str(locnum+1) 
-                        if board[locnum][buit] != "⚑":
-                            board[locnum][buit] = boardm[locnum][buit]
-                    if let > 1 and num > 1:
-                        locleter = let-1 ##let -1
-                        locnum = num-2 ##num-1
-                        buit = abcMap[locleter] + str(locnum+1)  
-                        if board[locnum][buit] != "⚑":
-                            board[locnum][buit] = boardm[locnum][buit]
-                    if let < boards and num > 1:
-                        locleter = let+1 ##let +1
-                        locnum = num-2 ##num-1
-                        buit = abcMap[locleter] + str(locnum+1)  
-                        if board[locnum][buit] != "⚑":
-                            board[locnum][buit] = boardm[locnum][buit]
-                    if let < boards:
-                        locleter = let+1 ##let +1
-                        locnum = num-1 ##num
-                        buit = abcMap[locleter] + str(locnum+1)
-                        if board[locnum][buit] != "⚑":
-                            board[locnum][buit] = boardm[locnum][buit]
-                    if num < boards:
-                        locleter = let 
-                        locnum = num ##num +1
-                        buit = abcMap[locleter] + str(locnum+1)
-                        if board[locnum][buit] != "⚑":
-                            board[locnum][buit] = boardm[locnum][buit]
-                    if let > 1 and num < boards:
-                        locleter = let-1 ##let -1
-                        locnum = num ##num+1
-                        buit = abcMap[locleter] + str(locnum+1)  
-                        if board[locnum][buit] != "⚑":
-                            #print(buit)
-                            board[locnum][buit] = boardm[locnum][buit]
-                    if let < boards and num < boards:
-                        locleter = let+1 ##let +1
-                        locnum = num ##num+1
-                        buit = abcMap[locleter] + str(locnum+1)  
-                        if board[locnum][buit] != "⚑":
-                            board[locnum][buit] = boardm[locnum][buit]
+                    checkUser(let, num, boardm, boards, "e", board)
 
 while True:
     boardprint(board)
@@ -220,73 +172,8 @@ while True:
                     let = j+1
                     if i != 0:
                         where = abcMap[let] + str(i)
-
-#                        print("test",where,boardm[i-1][where])
-
                         if board[i-1][where] == "□":
-
-                            if let > 1:
-                                locleter = let-1 ##let-1
-                                locnum = num-1
-                                buit = abcMap[locleter] + str(locnum+1)
-                                if board[locnum][buit] != "⚑":
-                                    board[locnum][buit] = boardm[locnum][buit]
-                            if num > 1:
-                                locleter = let 
-                                locnum = num-2 ##num-1
-
-                                buit = abcMap[locleter] + str(locnum+1) 
-                                if board[locnum][buit] != "⚑":
-                                    board[locnum][buit] = boardm[locnum][buit]
-                            if let > 1 and num > 1:
-                                locleter = let-1 ##let -1
-                                locnum = num-2 ##num-1
-
-                                buit = abcMap[locleter] + str(locnum+1)  
-                                if board[locnum][buit] != "⚑":
-                                    board[locnum][buit] = boardm[locnum][buit]
-                            if let < boards and num > 1:
-                                locleter = let+1 ##let +1
-                                locnum = num-2 ##num-1
-
-                                buit = abcMap[locleter] + str(locnum+1)  
-                                if board[locnum][buit] != "⚑":
-                                    board[locnum][buit] = boardm[locnum][buit]
-                            if let < boards:
-                                locleter = let+1 ##let +1
-                                locnum = num-1 ##num
-
-                                buit = abcMap[locleter] + str(locnum+1)
-                                if board[locnum][buit] != "⚑":
-                                    board[locnum][buit] = boardm[locnum][buit]
-                            if num < boards:
-                                locleter = let 
-                                locnum = num ##num +1
-
-                                buit = abcMap[locleter] + str(locnum+1)
-                                if board[locnum][buit] != "⚑":
-                                    board[locnum][buit] = boardm[locnum][buit]
-                            if let > 1 and num < boards:
-                                locleter = let-1 ##let -1
-                                locnum = num ##num+1
-
-                                buit = abcMap[locleter] + str(locnum+1)  
-                                
-                                if board[locnum][buit] != "⚑":
-                                    #print(buit)
-                                    board[locnum][buit] = boardm[locnum][buit]
-                            if let < boards and num < boards:
-                                locleter = let+1 ##let +1
-                                locnum = num ##num+1
-
-                                buit = abcMap[locleter] + str(locnum+1)  
-                                if board[locnum][buit] != "⚑":
-                                    board[locnum][buit] = boardm[locnum][buit]
+                            checkUser(let, num, boardm, boards, "e", board)
                             
-
-
-                    
-            
-
-
+                            
 boardprint(boardm)
