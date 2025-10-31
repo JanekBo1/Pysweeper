@@ -30,32 +30,7 @@ boardm = b6x6m ####
 boards = 6
 
 
-def checkUser(let, num, boardm, boards, a, board):
-    locleter = let-1 ##let-1
-    locnum = num-1
-    check(boardm, boards, locleter, locnum, a, board)
-    locleter = let
-    locnum = num-2
-    check(boardm, boards, locleter, locnum, a, board)
-    locleter = let+1
-    locnum = num-1
-    check(boardm, boards, locleter, locnum, a, board)
-    locleter = let
-    locnum = num
-    check(boardm, boards, locleter, locnum, a, board)
-    ###diagational
-    locleter = let-1 ##let-1
-    locnum = num-2  ##num-1
-    check(boardm, boards, locleter, locnum, a, board)
-    locleter = let+1 
-    locnum = num-2
-    check(boardm, boards, locleter, locnum, a, board)
-    locleter = let+1 
-    locnum = num
-    check(boardm, boards, locleter, locnum, a, board)
-    locleter = let-1 
-    locnum = num
-    check(boardm, boards, locleter, locnum, a, board)
+
 
 
 def boardprint(what):
@@ -85,9 +60,40 @@ def check(boardm, boards, locleter, locnum, mode, board):
             elif boardm[locnum][buit].isdigit() == True:
                 boardm[locnum][buit] = str(int(boardm[locnum][buit])+1)
         elif mode == "e":
-##            if boardm[locnum][buit] == "□":
-                board[locnum][buit] = boardm[locnum][buit]
+            if board[locnum][buit] != "□":
+                if boardm[locnum][buit] != "□":
+                    board[locnum][buit] = boardm[locnum][buit]
+                else:
+                    board[locnum][buit] = "O"
 
+def checkUser(let, num, boardm, boards, a, board):
+    locleter = let-1 ##let-1
+    locnum = num-1
+    check(boardm, boards, locleter, locnum, a, board)
+    locleter = let
+    locnum = num-2
+    check(boardm, boards, locleter, locnum, a, board)
+    locleter = let+1
+    locnum = num-1
+    check(boardm, boards, locleter, locnum, a, board)
+    locleter = let
+    locnum = num
+    check(boardm, boards, locleter, locnum, a, board)
+    ###diagational
+    locleter = let-1 ##let-1
+    locnum = num-2  ##num-1
+    check(boardm, boards, locleter, locnum, a, board)
+    locleter = let+1 
+    locnum = num-2
+    check(boardm, boards, locleter, locnum, a, board)
+    locleter = let+1 
+    locnum = num
+    check(boardm, boards, locleter, locnum, a, board)
+    locleter = let-1 
+    locnum = num
+    check(boardm, boards, locleter, locnum, a, board)
+
+###Visible
 boardprint(board)
 
 inp = input("where ")
@@ -106,7 +112,7 @@ for g in range(5):
     ranNum = random.randint(1, boards)
     ranLet = random.randint(1, boards)
     buit = abcMap[ranNum] + str(ranLet)
-    if boardm[ranLet-1][buit] != "X" and board[ranLet-1][buit] != "□":
+    if boardm[ranLet-1][buit] != "X" and board[ranLet-1][buit] != "□" and board[ranLet-1][buit] != "O":
 #       maxg = maxg + 1
         boardm[ranLet-1][buit] = "X"
 
@@ -128,7 +134,7 @@ for i in range(len(board)):
         if i != 0:
             where = abcMap[let] + str(i)
 
-            if board[i-1][where] == "□":
+            if board[i-1][where] == "□" or board[i-1][where] == "O" and boardm[i-1][where] != "□":
                 board[i-1][where] = boardm[i-1][where]
 
 
@@ -139,11 +145,31 @@ for h in range(20):
             let = j+1
             if i != 0:
                 where = abcMap[let] + str(i)
-                if board[i-1][where] == "□":
+                if board[i-1][where] == "O":
+                    board[i-1][where] = "□"
                     checkUser(let, num, boardm, boards, "e", board)
+
+
+
 
 while True:
     boardprint(board)
+    
+    boxleft = []
+    for y in range(len(board)):
+        for x, box in board[y].items():
+            if box == "■":
+                boxleft.append(x)
+    bombleft = []
+    for y in range(len(boardm)):
+        for x, box in boardm[y].items():
+            if box == "X":
+                bombleft.append(x)
+
+    if len(list(set(boxleft) - set(bombleft))) == 0:
+        print("!!!You Won!!!")
+        break
+
     inp = input("where")
     
     let = RabcMap[inp[0]] #number
@@ -158,12 +184,21 @@ while True:
         if inp[2] == "F":
             board[num-1][buit] = "⚑"
     else:
-        board[num-1][buit] = boardm[num-1][buit]
+        if boardm[num-1][buit] != "□":
+            board[num-1][buit] = boardm[num-1][buit]
+        else:
+            board[num-1][buit] = "O"
 
 
         if board[num-1][buit] == "X":
+            boardprint(boardm)
             print("!!!!GAME OVER!!!!")
             break
+
+        for y in range(len(board)):
+            for x, box in board[y].items():
+                if box == "O":
+                    boxleft.append(x)
 
         for h in range(20):
             for i in range(len(board)):
@@ -172,8 +207,8 @@ while True:
                     let = j+1
                     if i != 0:
                         where = abcMap[let] + str(i)
-                        if board[i-1][where] == "□":
+                        if board[i-1][where] == "O":
+                            board[i-1][where] = "□"
                             checkUser(let, num, boardm, boards, "e", board)
                             
-                            
-boardprint(boardm)
+
