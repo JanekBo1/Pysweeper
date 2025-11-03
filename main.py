@@ -100,7 +100,7 @@ inp = input("where ")
 
 let = RabcMap[inp[0]] #number
 num = int(inp[1])
-print(let, num)
+
 
 buit = abcMap[let] + str(num)
 board[num-1][buit] = "□"
@@ -138,7 +138,11 @@ for i in range(len(board)):
                 board[i-1][where] = boardm[i-1][where]
 
 
-for h in range(20):
+
+
+
+checkleft = ['A1']
+while checkleft != []:
     for i in range(len(board)):
         num = i
         for j in range(len(board[0])):
@@ -148,6 +152,12 @@ for h in range(20):
                 if board[i-1][where] == "O":
                     board[i-1][where] = "□"
                     checkUser(let, num, boardm, boards, "e", board)
+    checkleft = []
+    for y in range(len(board)):
+        for x, box in board[y].items():
+            if box == "O":
+                checkleft.append(x)
+
 
 
 
@@ -195,20 +205,28 @@ while True:
             print("!!!!GAME OVER!!!!")
             break
 
-        for y in range(len(board)):
-            for x, box in board[y].items():
-                if box == "O":
-                    boxleft.append(x)
 
-        for h in range(20):
+                    
+
+
+        checkleft = ['A1']
+        while checkleft != []:
             for i in range(len(board)):
                 num = i
                 for j in range(len(board[0])):
+                    if box == "O":
+                        checkleft.append(j)
                     let = j+1
                     if i != 0:
                         where = abcMap[let] + str(i)
                         if board[i-1][where] == "O":
                             board[i-1][where] = "□"
                             checkUser(let, num, boardm, boards, "e", board)
+            checkleft = []
+            for y in range(len(board)):
+                for x, box in board[y].items():
+                    if box == "O":
+                        checkleft.append(x)
+
                             
 
