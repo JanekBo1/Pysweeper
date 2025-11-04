@@ -30,10 +30,12 @@ boardm = b6x6m ####
 boards = 6
 
 
-
+flags = None
 
 
 def boardprint(what):
+    if flags != None:
+        print("Flags ",flags)
     for i in range(len(what)):
         
         print(i,end=" ")
@@ -60,7 +62,7 @@ def check(boardm, boards, locleter, locnum, mode, board):
             elif boardm[locnum][buit].isdigit() == True:
                 boardm[locnum][buit] = str(int(boardm[locnum][buit])+1)
         elif mode == "e":
-            if board[locnum][buit] != "□":
+            if board[locnum][buit] != "□" and board[locnum][buit] != "⚑":
                 if boardm[locnum][buit] != "□":
                     board[locnum][buit] = boardm[locnum][buit]
                 else:
@@ -107,13 +109,14 @@ board[num-1][buit] = "□"
 
 checkUser(let, num, boardm, boards, "e", board)
 
+flags = 0
 
 for g in range(5):
     ranNum = random.randint(1, boards)
     ranLet = random.randint(1, boards)
     buit = abcMap[ranNum] + str(ranLet)
     if boardm[ranLet-1][buit] != "X" and board[ranLet-1][buit] != "□" and board[ranLet-1][buit] != "O":
-#       maxg = maxg + 1
+        flags += 1
         boardm[ranLet-1][buit] = "X"
 
 for i in range(len(boardm)):
@@ -180,7 +183,7 @@ while True:
         print("!!!You Won!!!")
         break
 
-    inp = input("where")
+    inp = input("where ")
     
     let = RabcMap[inp[0]] #number
     num = int(inp[1])
@@ -190,14 +193,21 @@ while True:
     if len(inp) >= 4:
         if inp[3] == "F":
             board[num-1][buit] = "⚑"
+            flags -= 1
     elif len(inp) == 3:
         if inp[2] == "F":
             board[num-1][buit] = "⚑"
+            flags -= 1
     else:
+        if board[num-1][buit] == "⚑":
+            flags += 1
+        
         if boardm[num-1][buit] != "□":
             board[num-1][buit] = boardm[num-1][buit]
         else:
             board[num-1][buit] = "O"
+            
+
 
 
         if board[num-1][buit] == "X":
@@ -214,8 +224,6 @@ while True:
             for i in range(len(board)):
                 num = i
                 for j in range(len(board[0])):
-                    if box == "O":
-                        checkleft.append(j)
                     let = j+1
                     if i != 0:
                         where = abcMap[let] + str(i)
@@ -227,6 +235,3 @@ while True:
                 for x, box in board[y].items():
                     if box == "O":
                         checkleft.append(x)
-
-                            
-
