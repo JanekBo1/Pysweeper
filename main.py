@@ -21,13 +21,61 @@ b6x6m = [
     {"A6":"□", "B6": "□", "C6": "□", "D6": "□", "E6": "□", "F6": "□"},
     {}
 ]
+mapsize = int(input("Map size: "))
+
+
+###custom Board
+bcustom = [
+
+    ]
+for i in range(mapsize):
+    bcustom.append({})
+    for j in range(mapsize):
+        leterj = chr(ord('@')+j+1)
+        what = str(leterj)+str(i+1)
+        bcustom[i].update({what : "■"})
+bcustom.append({})
+
+
+#custom board where mines
+bcustomines = [
+
+    ]
+for i in range(mapsize):
+    bcustomines.append({})
+    for j in range(mapsize):
+        leterj = chr(ord('@')+j+1)
+        what = str(leterj)+str(i+1)
+        bcustomines[i].update({what : "□"})
+bcustomines.append({})
+        
+        
+#print(bcustom)
 
 
 
+def boardprint2(what):
+    if flags != None:
+        print("Flags ",flags)
+    for i in range(len(what)+1):
+        
+        print(i,end=" ")
 
-board = b6x6 ##board size change
-boardm = b6x6m ####
-boards = 6
+        for j in range(len(what[0])):
+
+            if i == 0:
+                print(j+1,end=" ")
+            else: 
+
+                where = str(i-1) + str(j)
+                #print(i-1,where)
+                print(what[i-1][where],end=" ")
+        print("")
+
+
+board = bcustom ##board size change
+boardm = bcustomines ####
+boards = mapsize
 
 
 flags = None
@@ -43,9 +91,9 @@ def boardprint(what):
         for j in range(len(what[0])):
 
             if i == 0:
-                print(abcMap[j+1],end=" ")
+                print(chr(ord('@')+j+1),end=" ")
             else:
-                where = abcMap[j+1] + str(i)
+                where = chr(ord('@')+j+1) + str(i)
                 #print(i-1,where)
                 print(what[i-1][where],end=" ")
         print("")
@@ -55,7 +103,7 @@ def boardprint(what):
 def check(boardm, boards, locleter, locnum, mode, board):
     if locleter > 0 and locnum > -1 and locleter < boards+1 and locnum < boards:
 
-        buit = abcMap[locleter] + str(locnum+1)
+        buit = chr(ord('@')+locleter) + str(locnum+1)
         if mode == "m":
             if boardm[locnum][buit] == "□":
                 boardm[locnum][buit] = "1"
@@ -96,25 +144,29 @@ def checkUser(let, num, boardm, boards, a, board):
     check(boardm, boards, locleter, locnum, a, board)
 
 ###Visible
+#boardprint2(bcustom)
+
 boardprint(board)
 
 inp = input("where ")
 
-let = RabcMap[inp[0]] #number
+let = ord(inp[0])-64 #number
 num = int(inp[1])
 
 
-buit = abcMap[let] + str(num)
+buit = chr(ord('@')+let) + str(num)
 board[num-1][buit] = "□"
 
 checkUser(let, num, boardm, boards, "e", board)
 
+
+######Mines Generator#######
 flags = 0
 
-for g in range(5):
+for g in range(boards):
     ranNum = random.randint(1, boards)
     ranLet = random.randint(1, boards)
-    buit = abcMap[ranNum] + str(ranLet)
+    buit = chr(ord('@')+ranNum) + str(ranLet)
     if boardm[ranLet-1][buit] != "X" and board[ranLet-1][buit] != "□" and board[ranLet-1][buit] != "O":
         flags += 1
         boardm[ranLet-1][buit] = "X"
@@ -124,7 +176,7 @@ for i in range(len(boardm)):
     for j in range(len(boardm[0])):
         let = j+1
         if i != 0:
-            where = abcMap[let] + str(i)
+            where = chr(ord('@')+let) + str(i)
             if boardm[i-1][where] == "X":
                 checkUser(let, num, boardm, boards, "m", board)
 
@@ -135,7 +187,7 @@ for i in range(len(board)):
     for j in range(len(board[0])):
         let = j+1
         if i != 0:
-            where = abcMap[let] + str(i)
+            where = chr(ord('@')+let) + str(i)
 
             if board[i-1][where] == "□" or board[i-1][where] == "O" and boardm[i-1][where] != "□":
                 board[i-1][where] = boardm[i-1][where]
@@ -151,7 +203,7 @@ while checkleft != []:
         for j in range(len(board[0])):
             let = j+1
             if i != 0:
-                where = abcMap[let] + str(i)
+                where = chr(ord('@')+let) + str(i)
                 if board[i-1][where] == "O":
                     board[i-1][where] = "□"
                     checkUser(let, num, boardm, boards, "e", board)
@@ -185,10 +237,12 @@ while True:
 
     inp = input("where ")
     
-    let = RabcMap[inp[0]] #number
+    print(ord("B")-64)
+
+    let = ord(inp[0])-64 #number
     num = int(inp[1])
 
-    buit = abcMap[let] + str(num)
+    buit = chr(ord('@')+let) + str(num)
 
     if len(inp) >= 4:
         if inp[3] == "F":
@@ -226,7 +280,7 @@ while True:
                 for j in range(len(board[0])):
                     let = j+1
                     if i != 0:
-                        where = abcMap[let] + str(i)
+                        where = chr(ord('@')+let) + str(i)
                         if board[i-1][where] == "O":
                             board[i-1][where] = "□"
                             checkUser(let, num, boardm, boards, "e", board)
