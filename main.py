@@ -2,6 +2,21 @@ abcMap = {1 : "A", 2 : "B", 3 : "C", 4 : "D", 5 : "E", 6 : "F"}
 RabcMap = {"A" : 1, "B" : 2, "C" : 3, "D" : 4, "E" : 5, "F" : 6}
 import time
 import random
+import math
+
+class Colo:
+    R = '\033[91m'
+    DR = '\033[31m'
+    G = '\033[92m'
+    Y = '\033[93m'
+    B = '\033[94m'
+    DB = '\033[34m'
+    C = '\033[96m'
+    M = '\033[95m'
+    RE = '\033[0m'
+    BO = '\033[1m'
+    GR = '\033[90m'
+    BL = '\033[30m'
 
 b6x6 = [
     {"A1":"■", "B1": "■", "C1": "■", "D1": "■", "E1": "■", "F1": "■"},
@@ -95,7 +110,27 @@ def boardprint(what):
             else:
                 where = chr(ord('@')+j+1) + str(i)
                 #print(i-1,where)
-                print(what[i-1][where],end=" ")
+                if what[i-1][where] == "1":
+                    print(Colo.B + what[i-1][where] + Colo.RE,end=" ")
+                elif what[i-1][where] == "2":
+                    print(Colo.G + what[i-1][where] + Colo.RE,end=" ")
+                elif what[i-1][where] == "3":
+                    print(Colo.R + what[i-1][where] + Colo.RE,end=" ")
+                elif what[i-1][where] == "4":
+                    print(Colo.DB + Colo.BO + what[i-1][where] + Colo.RE,end=" ")
+                elif what[i-1][where] == "5":
+                    print(Colo.DR + Colo.BO + what[i-1][where] + Colo.RE,end=" ")
+                elif what[i-1][where] == "6":
+                    print(Colo.C + what[i-1][where] + Colo.RE,end=" ")
+                elif what[i-1][where] == "7":
+                    print(Colo.M + what[i-1][where] + Colo.RE,end=" ")
+                elif what[i-1][where] == "8":
+                    print(Colo.GR + what[i-1][where] + Colo.RE,end=" ")
+
+#                elif what[i-1][where] == "X":
+#                    print(Colo.BL + what[i-1][where] + Colo.RE,end=" ")
+                else:
+                    print(what[i-1][where],end=" ")
         print("")
 
 
@@ -144,7 +179,9 @@ def checkUser(let, num, boardm, boards, a, board):
     check(boardm, boards, locleter, locnum, a, board)
 
 ###Visible
-#boardprint2(bcustom)
+
+
+
 
 boardprint(board)
 
@@ -163,7 +200,10 @@ checkUser(let, num, boardm, boards, "e", board)
 ######Mines Generator#######
 flags = 0
 
-for g in range(boards):
+minesnumber = boards*boards
+minesnumber = int(minesnumber / 6)
+
+for g in range(minesnumber):
     ranNum = random.randint(1, boards)
     ranLet = random.randint(1, boards)
     buit = chr(ord('@')+ranNum) + str(ranLet)
