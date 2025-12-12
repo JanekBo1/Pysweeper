@@ -64,29 +64,6 @@ for i in range(mapsize):
         bcustomines[i].update({what : "□"})
 bcustomines.append({})
         
-        
-#print(bcustom)
-
-
-
-def boardprint2(what):
-    if flags != None:
-        print("Flags ",flags)
-    for i in range(len(what)+1):
-        
-        print(i,end=" ")
-
-        for j in range(len(what[0])):
-
-            if i == 0:
-                print(j+1,end=" ")
-            else: 
-
-                where = str(i-1) + str(j)
-                #print(i-1,where)
-                print(what[i-1][where],end=" ")
-        print("")
-
 
 board = bcustom ##board size change
 boardm = bcustomines ####
@@ -101,7 +78,11 @@ def boardprint(what):
         print("Flags ",flags)
     for i in range(len(what)):
         
-        print(i,end=" ")
+        if i < 10:
+            print("0"+str(i),end=" ")
+        else:
+            print(i,end=" ")
+            
 
         for j in range(len(what[0])):
 
@@ -178,10 +159,10 @@ def checkUser(let, num, boardm, boards, a, board):
     locnum = num
     check(boardm, boards, locleter, locnum, a, board)
 
-###Visible
 
-
-
+######################
+###     Visible    ###
+######################
 
 boardprint(board)
 
@@ -197,7 +178,7 @@ board[num-1][buit] = "□"
 checkUser(let, num, boardm, boards, "e", board)
 
 
-######Mines Generator#######
+######  Mines Generator  #######
 flags = 0
 
 minesnumber = boards*boards
@@ -280,30 +261,26 @@ while True:
     print(ord("B")-64)
 
     let = ord(inp[0])-64 #number
-    num = int(inp[1])
+
+    if len(inp) >= 3:
+        if inp[2] != "F":
+            num = int(inp[1]+inp[2])
+            print("num:",num)
+        else:
+            num = int(inp[1])
 
     buit = chr(ord('@')+let) + str(num)
 
-    if len(inp) >= 4:
-        if inp[3] == "F":
-            board[num-1][buit] = "⚑"
-            flags -= 1
-    elif len(inp) == 3:
-        if inp[2] == "F":
-            board[num-1][buit] = "⚑"
-            flags -= 1
+
+    if inp[-1] == "F":
+        board[num-1][buit] = "⚑"
+        flags -= 1
     else:
-        if board[num-1][buit] == "⚑":
-            flags += 1
-        
         if boardm[num-1][buit] != "□":
             board[num-1][buit] = boardm[num-1][buit]
         else:
             board[num-1][buit] = "O"
             
-
-
-
         if board[num-1][buit] == "X":
             boardprint(boardm)
             print("!!!!GAME OVER!!!!")
