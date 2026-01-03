@@ -1,5 +1,3 @@
-abcMap = {1 : "A", 2 : "B", 3 : "C", 4 : "D", 5 : "E", 6 : "F"}
-RabcMap = {"A" : 1, "B" : 2, "C" : 3, "D" : 4, "E" : 5, "F" : 6}
 import time
 import random
 import math
@@ -18,26 +16,13 @@ class Colo:
     GR = '\033[90m'
     BL = '\033[30m'
 
-b6x6 = [
-    {"A1":"■", "B1": "■", "C1": "■", "D1": "■", "E1": "■", "F1": "■"},
-    {"A2":"■", "B2": "■", "C2": "■", "D2": "■", "E2": "■", "F2": "■"},
-    {"A3":"■", "B3": "■", "C3": "■", "D3": "■", "E3": "■", "F3": "■"},
-    {"A4":"■", "B4": "■", "C4": "■", "D4": "■", "E4": "■", "F4": "■"},
-    {"A5":"■", "B5": "■", "C5": "■", "D5": "■", "E5": "■", "F5": "■"},
-    {"A6":"■", "B6": "■", "C6": "■", "D6": "■", "E6": "■", "F6": "■"},
-    {}
-]
-b6x6m = [
-    {"A1":"□", "B1": "□", "C1": "□", "D1": "□", "E1": "□", "F1": "□"},
-    {"A2":"□", "B2": "□", "C2": "□", "D2": "□", "E2": "□", "F2": "□"},
-    {"A3":"□", "B3": "□", "C3": "□", "D3": "□", "E3": "□", "F3": "□"},
-    {"A4":"□", "B4": "□", "C4": "□", "D4": "□", "E4": "□", "F4": "□"},
-    {"A5":"□", "B5": "□", "C5": "□", "D5": "□", "E5": "□", "F5": "□"},
-    {"A6":"□", "B6": "□", "C6": "□", "D6": "□", "E6": "□", "F6": "□"},
-    {}
-]
-mapsize = int(input("Map size: "))
+mapsize = input("Map size: ")
 
+while mapsize.isdigit() == False:
+    print("Must be a number")
+    mapsize = input("Map size: ")
+
+mapsize = int(mapsize)
 
 ###custom Board
 bcustom = [
@@ -166,14 +151,44 @@ def checkUser(let, num, boardm, boards, a, board):
 
 boardprint(board)
 
+
 inp = input("where ")
+    
+
 
 let = ord(inp[0])-64 #number
-num = int(inp[1])
 
+if len(inp) >= 3:
+    if inp[2] != "F":
+        num = int(inp[1]+inp[2])
+    else:
+        num = int(inp[1])
+else:
+    num = int(inp[1])
+
+while num <= 0 or let > boards or num > boards:
+    if num <= 0:
+        print("Must be greater than 0")
+    if num >boards:
+        print("Number out of range")
+    if let >boards:
+        print("Leter out of range")
+    inp = input("where ")
+        
+    let = ord(inp[0])-64 #number
+    if len(inp) >= 3:
+        if inp[2] != "F":
+            num = int(inp[1]+inp[2])
+        else:
+            num = int(inp[1])
+    else:
+        num = int(inp[1])
+    
 
 buit = chr(ord('@')+let) + str(num)
+
 board[num-1][buit] = "□"
+
 
 checkUser(let, num, boardm, boards, "e", board)
 
@@ -257,17 +272,37 @@ while True:
         break
 
     inp = input("where ")
-    
-    print(ord("B")-64)
+    #print(ord("B")-64)
 
     let = ord(inp[0])-64 #number
 
     if len(inp) >= 3:
         if inp[2] != "F":
             num = int(inp[1]+inp[2])
-            print("num:",num)
+            #print("num:",num)
         else:
             num = int(inp[1])
+    else:
+        num = int(inp[1])
+
+    while num <= 0 or let > boards or num > boards:
+        if num <= 0:
+            print("Must be greater than 0")
+        if num >boards:
+            print("Number out of range")
+        if let >boards:
+            print("Leter out of range")
+        inp = input("where ")
+            
+        let = ord(inp[0])-64 #number
+        if len(inp) >= 3:
+            if inp[2] != "F":
+                num = int(inp[1]+inp[2])
+            else:
+                num = int(inp[1])
+        else:
+            num = int(inp[1])
+            
 
     buit = chr(ord('@')+let) + str(num)
 
