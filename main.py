@@ -16,6 +16,15 @@ class Colo:
     GR = '\033[90m'
     BL = '\033[30m'
 
+print('''
+  ____                                              
+ |  _ \\ _   _ _____      _____  ___ _ __   ___ _ __ 
+ | |_) | | | / __\\ \\ /\\ / / _ \\/ _ \\ '_ \\ / _ \\ '__|
+ |  __/| |_| \\__ \\\\ V  V /  __/  __/ |_) |  __/ |   
+ |_|    \\__, |___/ \\_/\\_/ \\___|\\___| .__/ \\___|_|   
+        |___/                      |_|              
+''')
+
 mapsize = input("Map size: ")
 
 while mapsize.isdigit() == False:
@@ -302,7 +311,7 @@ while True:
                 num = int(inp[1])
         else:
             num = int(inp[1])
-            
+
 
     buit = chr(ord('@')+let) + str(num)
 
